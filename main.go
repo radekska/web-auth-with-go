@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -37,9 +39,15 @@ func main() {
 
 }
 
-func encode(w http.ResponseWriter, r *http.Request) {
-
+func encode(writer http.ResponseWriter, request *http.Request) {
+	p1 := person{
+		Name: "Jenny",
+	}
+	err := json.NewEncoder(writer).Encode(p1)
+	if err != nil {
+		log.Println("Tried to encode invalid data.", err)
+	}
 }
-func decode(w http.ResponseWriter, r *http.Request) {
+func decode(writer http.ResponseWriter, request *http.Request) {
 
 }
