@@ -26,4 +26,11 @@ func main() {
 	}
 	fmt.Println(string(marshalled))
 
+	personList2 := []person{}
+	err = json.Unmarshal(marshalled, &personList2)
+	if err != nil {
+		log.Panic(err)
+	}
+	fmt.Println(personList2)
+
 }
