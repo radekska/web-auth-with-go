@@ -45,9 +45,20 @@ func encode(writer http.ResponseWriter, request *http.Request) {
 	}
 	err := json.NewEncoder(writer).Encode(p1)
 	if err != nil {
-		log.Println("Tried to encode invalid data.", err)
+		exceptionMessage("encode", err)
 	}
 }
 func decode(writer http.ResponseWriter, request *http.Request) {
+	var p1 person
+	err := json.NewDecoder(request.Body).Decode(&p1)
+	if err != nil {
+		exceptionMessage("decode", err)
+	} else {
+		log.Println("Person:", p1)
+	}
+}
 
+func exceptionMessage(message string, err error) {
+	log.Printf("Tried to %s invalid data.\n", message)
+	log.Println(err)
 }
