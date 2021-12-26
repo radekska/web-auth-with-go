@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/radekska/web-auth-with-go/passwordUtils"
 	"log"
 	"net/http"
 )
@@ -11,12 +13,22 @@ type person struct {
 }
 
 func main() {
-	http.HandleFunc("/encode", encode)
-	http.HandleFunc("/decode", decode)
-	err := http.ListenAndServe(":8080", nil)
+	//http.HandleFunc("/encode", encode)
+	//http.HandleFunc("/decode", decode)
+	//err := http.ListenAndServe(":8080", nil)
+	//if err != nil {
+	//	print(err)
+	//}
+	password := "my_secret_pass123"
+	encryptedPassword, err := passwordUtils.HashPassword(password)
 	if err != nil {
-		print(err)
+		fmt.Println(err)
 	}
+	err = passwordUtils.ComparePassword(password, encryptedPassword)
+	if err != nil {
+		fmt.Println(err)
+	}
+	println(encryptedPassword)
 }
 
 func encode(writer http.ResponseWriter, request *http.Request) {
